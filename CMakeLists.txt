@@ -11,8 +11,7 @@ qt_standard_project_setup()
 
 qt_add_executable(server
     server_main.cpp
-    session.cpp
-    session.h
+    session.cpp session.h
 )
 target_link_libraries(server
     PRIVATE
@@ -24,7 +23,8 @@ qt_add_executable(client
     client_main.cpp
     file_trader.cpp file_trader.h
     client.cpp client.h
-    file_trader.h
+    file_header.h
+    constant.h
 )
 target_link_libraries(client
     PRIVATE

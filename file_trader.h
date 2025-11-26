@@ -1,7 +1,8 @@
 #ifndef FILE_TRADER_H
 #define FILE_TRADER_H
-#include<boost/asio.hpp>
+#include <boost/asio.hpp>
 #include <fstream>
+#include "file_header.h"
 
 class file_trader : public std::enable_shared_from_this<file_trader>
 {
@@ -10,12 +11,18 @@ public:
     void start();
 private:
     void open_file();
+    file_header make_header();
+    void send_meta();
     void send_file();
     boost::asio::ip::tcp::socket socket_;
     std::ifstream file_;
+    uint64_t size_file_;
     const std::string name_;
-    std::array<char, 4096> buf_;
+    std::array<char, 131072> buf_;
     std::size_t count_chunks = 0;
+    std::size_t max_chunks;
+
+    int procent = 1;
 };
 
 #endif // FILE_TRADER_H

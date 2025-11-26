@@ -1,3 +1,4 @@
+#include "constant.h"
 #include "client.h"
 #include "file_trader.h"
 #include <iostream>
@@ -46,7 +47,7 @@ void Client::do_connect(const boost::asio::ip::tcp::resolver::results_type& endp
                 self->retry_count = 0;
 
                 // govno;
-                std::make_shared<file_trader>(std::move(self->socket_), "file.txt")->start();
+                std::make_shared<file_trader>(std::move(self->socket_), FILE_PATH)->start();
 
             } else {
                 ++self->retry_count;
@@ -65,6 +66,6 @@ void Client::on_timeout(const boost::system::error_code& ec) {
         return;
     }
 
-    std::cerr << "connect close! " << std::endl;
+    std::cerr << "Сonnect close! " << std::endl;
     return;
 }

@@ -1,12 +1,10 @@
 #include "client.h"
-
-std::string host = "25.53.195.106";
-std::string port = "55555";
+#include "constant.h"
 
 int main() {
     boost::asio::io_context io;
 
-    std::make_shared<Client>(io)->start(host, port);
+    std::make_shared<Client>(io)->start(HOST, PORT);
 
     io.run();
     return 0;
