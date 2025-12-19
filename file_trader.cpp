@@ -42,9 +42,9 @@ void file_trader::send_meta() {
     });
 }
 void file_trader::send_file() {
-    if (count_chunks >= max_chunks / 100 * test) {
-        std::cout << test << "%" << std::endl;
-        test += 1;
+    if (count_chunks >= max_chunks / 100 * procent) {
+        std::cout << procent << "%" << std::endl;
+        procent += 1;
     }
 
     if (file_.eof()) {
