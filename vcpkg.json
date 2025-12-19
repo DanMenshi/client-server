@@ -2,7 +2,6 @@
   "name": "ping-manager",
   "version-string": "1.0.0",
   "dependencies": [
-    "boost-asio",
-    "nlohmann-json"
+    "boost-asio"
   ]
 }
