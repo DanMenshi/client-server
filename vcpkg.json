@@ -1,5 +1,5 @@
 {
-  "name": "ping-manager",
+  "name": "boost-tests",
   "version-string": "1.0.0",
   "dependencies": [
     "boost-asio"
