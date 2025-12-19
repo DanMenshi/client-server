@@ -6,7 +6,7 @@
 struct file_header {
     bool flagSendtoAccept;
     // 0. accept 
-    // 1. send 
+    // 1. send
     boost::asio::ip::address addr;
     uint16_t port;
     char name[225];
