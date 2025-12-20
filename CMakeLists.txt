@@ -19,6 +19,7 @@ add_executable(client
     client_main.cpp
     file_trader.cpp file_trader.h
     client.cpp client.h
+    App.h App.cpp
     
     file_header.h
     constant.h

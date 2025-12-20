@@ -2,9 +2,11 @@
 #include "file_header.h"
 #include <iostream>
 
-file_trader::file_trader(boost::asio::ip::tcp::socket&& socket, const std::string& name)
+file_trader::file_trader(boost::asio::ip::tcp::socket& socket, const std::string& name, const std::string& host, const std::string& port)
     : socket_(std::move(socket)),
-      name_(name)
+      name_(name),
+      addr_(boost::asio::ip::make_address(host)),
+      port_(std::stoi(port))
 {}
 void file_trader::start() {
     open_file();
@@ -16,18 +18,12 @@ void file_trader::open_file() {
         return;
     }
     size_file_ = file_.tellg();
-    max_chunks = size_file_ / buf_.size();
+    max_chunks = size_file_ / chunk.size();
     file_.seekg(0);
     send_meta();
 }
-file_header file_trader::make_header() {
-    file_header fh{};
-    std::snprintf(fh.name, sizeof(fh.name), "%s", name_.c_str());
-    fh.size = size_file_;
-    return fh;
-}
 void file_trader::send_meta() {
-    file_header fh = make_header();
+    file_header fh = make_header(0, addr_, port_, name_, size_file_);
 
     auto self = shared_from_this();
 
@@ -52,11 +48,11 @@ void file_trader::send_file() {
         return;
     }
 
-    file_.read(buf_.data(), buf_.size());
+    file_.read(chunk.data(), chunk.size());
     std::size_t bytes = file_.gcount();
 
     auto self = shared_from_this();
-    boost::asio::async_write(socket_, boost::asio::buffer(buf_.data(), bytes),
+    boost::asio::async_write(socket_, boost::asio::buffer(chunk.data(), bytes),
     [self] (boost::system::error_code ec, std::size_t) {
         if (!ec) {
             ++self->count_chunks;

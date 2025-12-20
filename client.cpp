@@ -45,10 +45,6 @@ void Client::do_connect(const boost::asio::ip::tcp::resolver::results_type& endp
             if (!ec) {
                 std::cout << "Connected to: " << endpoint.address().to_string() << ":" << endpoint.port() << std::endl;
                 self->retry_count = 0;
-
-                // govno;
-                std::make_shared<file_trader>(std::move(self->socket_), FILE_PATH)->start();
-
             } else {
                 ++self->retry_count;
                 if (self->retry_count < MAX_RETRY) {
